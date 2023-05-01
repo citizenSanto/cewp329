@@ -26,34 +26,21 @@
     </section>
 
     <script>
-        const debounce = (func, wait = 20, immediate = true) => {
-            let timeout;
-            return function () {
-                const context = this, args = arguments;
-                const later = function () {
-                    timeout = null;
-                    if (!immediate) func.apply(context, args);
-                };
-                const callNow = immediate && !timeout;
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-                if (callNow) func.apply(context, args);
-            };
-        };
+        const man = document.getElementById('man');
+        const astro = document.getElementById('astro');
 
-        const parallax = () => {
-            const man = document.getElementById('man');
-            const astro = document.getElementById('astro');
-            const scrollPosition = window.pageYOffset;
-
-            requestAnimationFrame(() => {
-                man.style.transform = `translateY(${scrollPosition * 0.9}px)`;
-                astro.style.transform = `translateY(-${scrollPosition * 0.5}px) rotate(${scrollPosition * 0.02}deg)`;
-            });
-        };
-
-        window.addEventListener('scroll', debounce(parallax));
-
+        window.addEventListener("scroll", () => {
+            let offset = window.scrollY;
+            console.log(offset);
+            man.style.bottom = offset * 0.9 + 'px';
+            // astro.style.bottom = offset * 0.5 + 'px';
+            // astro.style.left = offset * 0.5 + 'px';
+            // astro.style.transform =  "rotate(" + offset * 0.2 + "deg)";
+            //astro.style.transform = 'translateY(' + '-' + offset * 0.5 + 'px)';
+            //astro.style.transform = `translate(${offset * 0.2}px, -${offset * 0.5}px) rotate(${offset * 0.02}deg)`;
+            astro.style.transform = `translateY(-${offset * 0.5}px) rotate(${offset * 0.02}deg)`;
+            // higher % scrolls faster
+        });
 
     </script>
 </body>
